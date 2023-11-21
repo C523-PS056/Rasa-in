@@ -3,6 +3,7 @@
 * {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
 }
 
 h1,
@@ -20,20 +21,45 @@ body {
   flex-direction: column;
 }
 
+/* Skip to content */
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: rgb(0, 0, 0);
+  padding: 1em;
+  z-index: 100;
+  text-decoration: none;
+  font-weight: 500;
+}
+.skip-link:focus {
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  outline: none;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+/* End Skip to content */
+
 /*
   AppBar
 */
 
 .app-bar {
   margin: 0;
-  padding: 0.5rem 1.5rem;
+  padding: 1rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 5rem;
 }
 
 .app-bar__brand h1 {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 700;
   line-height: 1.75rem;
 }
@@ -48,7 +74,7 @@ body {
   border: none;
   width: 2.75rem;
   height: 2.75rem;
-  padding: 0.5rem 0;
+  padding: 0.6rem 0.25rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -76,23 +102,26 @@ body {
 
 .app-bar__navigation {
   position: absolute;
-  top: 0;
+  top: -100%;
   left: 0;
+  padding: 5rem 0;
   width: 100vw;
-  height: 100vh;
   background: #ededed;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 10;
+  backdrop-filter: blur(10px);
   transition: all 0.5s;
 }
 
 .app-bar__navigation ul {
-  
+  padding: 3.5rem 0;
+  flex-direction: column;
+  display: flex;
   min-width: 50vw;
   margin: 0 auto;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .app-bar__navigation ul li {
@@ -105,10 +134,89 @@ body {
 .app-bar__navigation ul li a {
   font-size: 1.5rem;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
+  color: #4a4a4a;
+}
+
+.app-bar__navigation ul li a:hover {
   color: #000;
+}
+
+.app-bar__navigation.open {
+  top: 0;
+  transition: all 0.5s;
+}
+
+.hamburger-line.inverse {
+  background: #fff;
 }
 
 /*
   End AppBar
 */
+
+/* Main content */
+main {
+  flex: 1;
+}
+
+/* End main content */
+
+/* Footer */
+footer {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 1.5rem;
+  color: #fff;
+  background-color: #0f0f0f;
+  gap: 1rem;
+}
+
+.footer-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.footer-title h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.footer-title p {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 150%;
+}
+
+.footer-information {
+  display: flex;
+  justify-content: space-between;
+}
+.footer-information__item {
+  display: flex;
+  gap: 0.4rem;
+  flex-direction: column;
+}
+.footer-information__item h4 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.footer-information__item ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.footer-information__item ul li {
+  list-style: none;
+  font-size: 0.875rem;
+}
+.footer-information__item ul li a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.footer-copyright {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
