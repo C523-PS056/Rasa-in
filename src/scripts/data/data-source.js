@@ -5,12 +5,14 @@ class DataSource {
     const response = await fetch(API_ENDPOINT.NEW_RECIPES);
     const responseJson = await response.json();
     return responseJson.results;
+
   }
 
   static async recipeDetail(key) {
     const response = await fetch(API_ENDPOINT.RECIPE_DETAIL(key));
     const responseJson = await response.json();
     return responseJson.results;
+
   }
 
   static async recipeByCategory(key) {
@@ -29,6 +31,7 @@ class DataSource {
     const response = await fetch(API_ENDPOINT.NEW_ARTICLE);
     const responseJson = await response.json();
     return responseJson.results;
+
   }
 }
 
