@@ -47,17 +47,17 @@ const Beranda = {
   <div class="category-container">
   </div>
   <div class="button-container">
-    <button id="loadMoreCategories" class="button">Tampilkan Semua</button>
+    <button id="loadMoreCategories" class="button button-large">Tampilkan Semua</button>
   </div>
 </section>
 
 <section class="new-recipes">
 <h2 class="section-title">Resep terbaru</h2>
-<div class="new-recipes-container">
+<div class="recipes-container">
   
 </div>
 <div class="button-container">
-  <button class="button"  type="submit">Lihat Selengkapnya</button>
+  <a class="button button-large" href="#/resep"  type="submit">Lihat Selengkapnya</a>
 </div>
 </section>
 
@@ -71,7 +71,7 @@ const Beranda = {
   </div>
   </div>
   <div class="button-container">
-    <button class="button"  type="submit">Lihat Selengkapnya</button>
+    <button class="button button-large"  type="submit">Lihat Selengkapnya</button>
   </div>
 </section>
 
@@ -95,32 +95,47 @@ const Beranda = {
   },
 
   async afterRender() {
+    // categories
     const categories = await DataSource.recipeCategory();
     const categoryContainer = document.querySelector('.category-container');
 
-    const limitedCategories = categories.slice(0, 6);
+    // Menentukan jumlah item yang akan ditampilkan sesuai dengan lebar layar
+    const screenWidth = window.innerWidth;
+    let numberOfItemsToShow;
+
+    if (screenWidth < 640) {
+      numberOfItemsToShow = 6;
+    } else if (screenWidth < 1024) {
+      numberOfItemsToShow = 8;
+    } else {
+      numberOfItemsToShow = 10;
+    }
+
+    const limitedCategories = categories.slice(0, numberOfItemsToShow);
     limitedCategories.forEach((category) => {
       categoryContainer.innerHTML +=
         createCategoryRecipesItemTemplate(category);
     });
 
     const loadMoreButton = document.querySelector('#loadMoreCategories');
-    loadMoreButton.addEventListener('click', () => {
-      categoryContainer.innerHTML = '';
-      categories.forEach((category) => {
-        categoryContainer.innerHTML +=
-          createCategoryRecipesItemTemplate(category);
-      });
-
+    if (categories.length == limitedCategories.length) {
       loadMoreButton.style.display = 'none';
-    });
+    } else {
+      loadMoreButton.addEventListener('click', () => {
+        categoryContainer.innerHTML = '';
+        categories.forEach((category) => {
+          categoryContainer.innerHTML +=
+            createCategoryRecipesItemTemplate(category);
+        });
+
+        loadMoreButton.style.display = 'none';
+      });
+    }
 
     // new recipes
     const newRecipes = await DataSource.newRecipe();
     const limitNewRecipes = newRecipes.slice(0, 6);
-    const newRecipesContainer = document.querySelector(
-      '.new-recipes-container',
-    );
+    const newRecipesContainer = document.querySelector('.recipes-container');
 
     limitNewRecipes.forEach((recipe) => {
       newRecipesContainer.innerHTML += createNewRecipesItemTemplate(recipe);
@@ -138,7 +153,7 @@ const Beranda = {
     var splide = new Splide('.splide', {
       type: 'loop',
       gap: '1.5rem',
-      perPage: 2,
+      perPage: 3,
       autoWidth: true,
       autoplay: true,
       perMove: 1,
@@ -152,6 +167,7 @@ const Beranda = {
         480: {
           perPage: 1,
           gap: '.7rem',
+          autoWidth: false,
         },
       },
     });
