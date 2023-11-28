@@ -7,6 +7,10 @@
   .app-bar {
     padding: 1rem 2.5rem;
   }
+  .app-bar__brand h1 {
+    font-size: 2rem;
+    line-height: 2rem;
+  }
   /* End AppBar */
 
   /*main content  */
@@ -15,12 +19,16 @@
   }
 
   section {
-    margin: 0 2.5rem;
+    margin: 1.5rem 2.5rem;
   }
 
   .section-title {
     font-size: 1.75rem;
     margin-bottom: 0.75rem;
+  }
+
+  .page-title {
+    font-size: 1.75rem;
   }
 
   .button-container {
@@ -31,6 +39,20 @@
     font-size: 1rem;
   }
 
+  .button-container .button-large {
+    width: 21rem;
+  }
+
+  .button-back {
+    font-size: 1rem;
+  }
+  .button-back i {
+    font-size: 1.25rem;
+  }
+
+  .filter {
+    font-size: 1rem;
+  }
   /* hero */
   .hero {
     margin: 1rem 1rem 3.5rem 1rem;
@@ -100,7 +122,7 @@
   .new-recipes {
     gap: 1.5rem;
   }
-  .new-recipes-container {
+  .recipes-container {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
@@ -150,6 +172,11 @@
 
   .article__item-text h4 {
     font-size: 1.125rem;
+  }
+
+  .article-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
 
   /* article end */
@@ -228,12 +255,8 @@
 
   /*main content  */
 
-  main {
-    margin: auto;
-  }
-
   section {
-    margin: 0 4rem;
+    margin: 1.5rem 4rem;
   }
   /* hero */
   .hero {
@@ -262,19 +285,26 @@
   /* category */
   .category-container {
     margin: 1.5rem 0;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 1.5rem;
   }
 
   /* end category */
 
   /* new recipes */
-  .new-recipes-container {
+  .recipes-container {
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
   }
 
   /* end new recipes */
+
+  /* artikel */
+  .article-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  /* end artikel */
 
   /* about-us */
   .about-us {
@@ -299,4 +329,11 @@
   }
 
   /* end footer */
+}
+
+@media screen and (min-width: 1280px) {
+  main {
+    width: 1280px;
+    margin: auto;
+  }
 }
