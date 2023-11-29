@@ -99,7 +99,7 @@ const recipeDetailTemplate = (recipe) => {
     </div>
     <div class="recipe-steps">
       <h3 tabindex="0">Cara Membuat</h3>
-      <div class="recipe-steps__info">
+      <div 
         <ol>
           ${steps}
         </ol>
@@ -118,7 +118,7 @@ const createLikeButtonTemplate = () => `
 `;
 
 const createLikedButtonTemplate = () => `
-  <button aria-label="unlike this recipe" id="likeButton" class="like liked">
+  <button aria-label="unlike this reci
     <i class='bx bxs-heart' aria-hidden="true"></i>
   </button>
 `;

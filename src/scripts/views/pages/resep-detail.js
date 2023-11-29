@@ -7,10 +7,8 @@ const ResepDetail = {
   async render() {
     return `
       <section id="recipe" class="recipe">
-    
      </section>
        <div id="likeButtonContainer"></div>
-      
     `;
   },
 
@@ -30,7 +28,7 @@ const ResepDetail = {
           thumb: recipe.thumb,
           times: recipe.times,
           difficulty: recipe.difficulty,
-          calories: recipe.calories,
+
         },
       });
     } else {
