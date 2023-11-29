@@ -748,3 +748,64 @@ footer {
 }
 
 /* end pagination */
+
+/*
+  Detail recipe
+*/
+
+.recipe {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.recipe .recipe__poster {
+  width: 100%;
+  object-fit: cover;
+}
+
+.recipe p {
+  font-weight: 500;
+  text-align: start;
+  margin-top: 5px;
+}
+
+.recipe .recipe__title {
+  color: #000000;
+  text-align: start;
+}
+
+.recipe .recipe__info h4 {
+  color: #000000;
+  margin: 8px 0;
+  text-align: start;
+}
+
+.recipes .recipe__info_menu {
+  padding-left: 25px;
+  text-align: start;
+}
+
+/*
+   Like
+*/
+
+.like {
+  font-size: 18px;
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  background-color:#fff;
+  color: darkred;
+  border: 0;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

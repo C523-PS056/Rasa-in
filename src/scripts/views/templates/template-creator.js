@@ -8,7 +8,7 @@ const createCategoryRecipesItemTemplate = (category) => `
 `;
 
 const createNewRecipesItemTemplate = (recipes) => `
-<a class="new-recipes__item" href="">
+<a class="new-recipes__item" href="#/detail/${recipes.key}">
     <div class="new-recipes__item-image">
     <img src="${recipes.thumb}" alt="${recipes.title}">
     </div>
@@ -49,8 +49,77 @@ const createNewArticlesItemTemplate = (
 </li>
 `;
 
+const recipeDetailTemplate = (recipe) => {
+  let ingredients = '';
+  let steps = '';
+
+  recipe.ingredient.forEach((ingredient) => {
+    ingredients += `<li>${ingredient}</li>`;
+  });
+
+  recipe.step.forEach((step) => {
+    steps += `<li>${step}</li>`;
+  });
+
+  const htmlStr = `
+    <div class="recipe__title">
+      <h2 tabindex="0">${recipe.title}</h2>
+      <p tabindex="0">${recipe.desc}</p>
+    </div>
+    <div class="new-recipes__item-image">
+      <img src="${recipe.thumb}" alt="${recipe.title}">
+    </div>
+    <div class="recipes-info">
+      ${
+        recipe.times
+          ? `<div class="recipes-info__item"><i class='bx bx-timer'></i><p>${recipe.times}</p></div>`
+          : ''
+      }
+      ${
+        recipe.difficulty
+          ? `<div class="recipes-info__item"><i class='bx bx-line-chart'></i><p>${recipe.difficulty}</p></div>`
+          : ''
+      }
+
+    </div>
+    <div class="recipe__info">
+      <h4 tabindex="0">Bahan-bahan</h4>
+      <div class="recipe__info_menu">
+        <ul>
+          ${ingredients}
+        </ul>
+      </div>
+    </div>
+    <div class="recipe__info">
+      <h4 tabindex="0">Cara Membuat</h4>
+      <div class="recipe__info_menu">
+        <ol>
+          ${steps}
+        </ol>
+      </div>
+    </div>
+  `;
+
+  return htmlStr;
+};
+
+const createLikeButtonTemplate = () => `
+  <button aria-label="like this recipe" id="likeButton" class="like">
+    <i class='bx bx-heart' aria-hidden="true"></i>
+  </button>
+`;
+
+const createLikedButtonTemplate = () => `
+  <button aria-label="unlike this recipe" id="likeButton" class="like">
+    <i class='bx bxs-heart' aria-hidden="true"></i>
+  </button>
+`;
+
 export {
   createCategoryRecipesItemTemplate,
   createNewRecipesItemTemplate,
   createNewArticlesItemTemplate,
+  recipeDetailTemplate,
+  createLikeButtonTemplate,
+  createLikedButtonTemplate,
 };
