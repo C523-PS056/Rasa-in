@@ -99,7 +99,7 @@ const recipeDetailTemplate = (recipe) => {
     </div>
     <div class="recipe-steps">
       <h3 tabindex="0">Cara Membuat</h3>
-      <div 
+      <div class="recipe-steps__info">
         <ol>
           ${steps}
         </ol>
