@@ -1,5 +1,3 @@
-/* eslint-disable no-prototype-builtins */
-/* eslint-disable consistent-return */
 import { openDB } from 'idb';
 import CONFIG from '../globals/config';
 
@@ -7,12 +5,14 @@ const { DATABASE_NAME, DATABASE_VERSION, OBJECT_STORE_NAME } = CONFIG;
 
 const dbPromise = openDB(DATABASE_NAME, DATABASE_VERSION, {
   upgrade(database) {
-    database.createObjectStore(OBJECT_STORE_NAME, { keyPath: 'id' });
+    database.createObjectStore(OBJECT_STORE_NAME, {
+      keyPath: 'id',
+    });
   },
 });
 
 const FavoriteRecipeIdb = {
-  async getResep(id) {
+  async getRecipe(id) {
     if (!id) {
       return;
     }
@@ -25,7 +25,7 @@ const FavoriteRecipeIdb = {
     if (!recipe.hasOwnProperty('id')) {
       return;
     }
-    return (await dbPromise).put(OBJECT_STORE_NAME, resep);
+    return (await dbPromise).put(OBJECT_STORE_NAME, recipe);
   },
   async deleteRecipe(id) {
     return (await dbPromise).delete(OBJECT_STORE_NAME, id);
