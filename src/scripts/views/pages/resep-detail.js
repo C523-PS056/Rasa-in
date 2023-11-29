@@ -6,8 +6,9 @@ import LikeButtonInitiator from '../../utils/like-button-initiator';
 const ResepDetail = {
   async render() {
     return `
-      <div id="recipe" class="recipe"></div>
-      <div id="likeButtonContainer"></div>
+      <section id="recipe" class="recipe">
+     </section>
+       <div id="likeButtonContainer"></div>
     `;
   },
 
@@ -24,8 +25,10 @@ const ResepDetail = {
         recipe: {
           id: recipe.key,
           title: recipe.title,
-          description: recipe.desc,
-          img: recipe.thumb,
+          thumb: recipe.thumb,
+          times: recipe.times,
+          difficulty: recipe.difficulty,
+
         },
       });
     } else {

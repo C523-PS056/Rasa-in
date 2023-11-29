@@ -8,7 +8,9 @@ const createCategoryRecipesItemTemplate = (category) => `
 `;
 
 const createNewRecipesItemTemplate = (recipes) => `
-<a class="new-recipes__item" href="#/detail/${recipes.key}">
+<a class="new-recipes__item" href="${
+  recipes.key ? `#/detail/${recipes.key}` : `#/detail/${recipes.id}`
+}">
     <div class="new-recipes__item-image">
     <img src="${recipes.thumb}" alt="${recipes.title}">
     </div>
@@ -62,41 +64,47 @@ const recipeDetailTemplate = (recipe) => {
   });
 
   const htmlStr = `
-    <div class="recipe__title">
-      <h2 tabindex="0">${recipe.title}</h2>
-      <p tabindex="0">${recipe.desc}</p>
+    <div class="button-back-container">
+       <a class="button-back" href="#/beranda"><i class='bx bx-chevron-left'></i>Kembali</a>
     </div>
-    <div class="new-recipes__item-image">
-      <img src="${recipe.thumb}" alt="${recipe.title}">
+    <div class="recipe-detail-wrapper">
+      <div class="recipe-detail-text">
+        <h2 tabindex="0">${recipe.title}</h2>
+        <p tabindex="0">${recipe.desc}</p>
+      </div>
+      <div class="recipe__item-image">
+        <img src="${recipe.thumb}" alt="${recipe.title}">
+      </div>
+      <div class="recipes-info">
+        ${
+          recipe.times
+            ? `<div class="recipes-info__item"><i class='bx bx-timer'></i><p>${recipe.times}</p></div>`
+            : ''
+        }
+        ${
+          recipe.difficulty
+            ? `<div class="recipes-info__item"><i class='bx bx-line-chart'></i><p>${recipe.difficulty}</p></div>`
+            : ''
+        }
+      </div>
     </div>
-    <div class="recipes-info">
-      ${
-        recipe.times
-          ? `<div class="recipes-info__item"><i class='bx bx-timer'></i><p>${recipe.times}</p></div>`
-          : ''
-      }
-      ${
-        recipe.difficulty
-          ? `<div class="recipes-info__item"><i class='bx bx-line-chart'></i><p>${recipe.difficulty}</p></div>`
-          : ''
-      }
-
-    </div>
-    <div class="recipe__info">
-      <h4 tabindex="0">Bahan-bahan</h4>
-      <div class="recipe__info_menu">
+    <div class="ingredients-steps-wrapper">
+    <div class="recipe-ingredients">
+      <h3 tabindex="0">Bahan-bahan</h3>
+      <div class="recipe-ingredients__info">
         <ul>
           ${ingredients}
         </ul>
       </div>
     </div>
-    <div class="recipe__info">
-      <h4 tabindex="0">Cara Membuat</h4>
-      <div class="recipe__info_menu">
+    <div class="recipe-steps">
+      <h3 tabindex="0">Cara Membuat</h3>
+      <div 
         <ol>
           ${steps}
         </ol>
       </div>
+    </div>
     </div>
   `;
 
@@ -110,7 +118,7 @@ const createLikeButtonTemplate = () => `
 `;
 
 const createLikedButtonTemplate = () => `
-  <button aria-label="unlike this recipe" id="likeButton" class="like">
+  <button aria-label="unlike this reci
     <i class='bx bxs-heart' aria-hidden="true"></i>
   </button>
 `;

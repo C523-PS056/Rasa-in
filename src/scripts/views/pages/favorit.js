@@ -1,4 +1,4 @@
-import DataSource from '../../data/data-source';
+import FavoriteRecipeIdb from '../../data/favorite-recipes-idb';
 import { createNewRecipesItemTemplate } from '../templates/template-creator';
 
 const Favorit = {
@@ -39,13 +39,12 @@ const Favorit = {
   `;
   },
 
-  //   belum diubah
   async afterRender() {
-    // const recipes = await FavoriteRecipeIdb.getAllRecipe();
-    // const recipesContainer = document.querySelector('.recipes-container');
-    // recipes.forEach((recipe) => {
-    //   recipesContainer.innerHTML += createNewRecipesItemTemplate(recipe);
-    // });
+    const recipes = await FavoriteRecipeIdb.getAllRecipe();
+    const recipesContainer = document.querySelector('.recipes-container');
+    recipes.forEach((recipe) => {
+      recipesContainer.innerHTML += createNewRecipesItemTemplate(recipe);
+    });
   },
 };
 
