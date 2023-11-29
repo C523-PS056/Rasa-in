@@ -81,14 +81,14 @@ const Beranda = {
   <p>Rasa-IN (Rasa Indonesia Nusantara)  adalah website yang menyediakan informasi resep-resep masakan nusantara.</p>
 </div>
 <div class="about-us-galery">
-  <div class="about-us-galery__item">1</div>
+  <div class="about-us-galery__item"><img src="./images/about-us/cakra.jpeg" alt=""></div>
   <div class="about-us-galery__item"><h2>LOGO</h2></div>
   <div class="about-us-galery__item"><h2>Rasa-IN</h2> </div>
-  <div class="about-us-galery__item">4</div>
-  <div class="about-us-galery__item">5</div>
+  <div class="about-us-galery__item"><img src="./images/about-us/ganteng.jpg" alt=""></div>
+  <div class="about-us-galery__item"><img src="./images/about-us/ari.jpg" alt=""></div>
   <div class="about-us-galery__item"><p>Rasa Indonesia Nusantara</p></div>
-  <div class="about-us-galery__item">7</div>
-  <div class="about-us-galery__item">8</div>
+  <div class="about-us-galery__item"><img src="./images/about-us/tri.jpg" alt=""></div>
+  <div class="about-us-galery__item"></div>
 </div>
 </section>      
       `;
