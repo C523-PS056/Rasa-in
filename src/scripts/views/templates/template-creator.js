@@ -1,57 +1,163 @@
-const createCategoryRecipesItemTemplate = (category) => `
-<a class="category__item" href="#/recipes?category=${category.key}">
-<div class="category__item-image">
-<img src="${category.img}" alt="${category.category}">
-</div>
-<h4 class="category__item-title">${category.category}</h4>
-</a>
-`;
+const createCategoryRecipesItemTemplate = (category, isLoading = false) => {
+  if (isLoading) {
+    // Tampilkan skeleton loader jika sedang dalam proses loading
+    return `
+      <div class="category__item skeleton-loader">
+        <div class="category__item-image skeleton-loader-image"></div>
+        <div class="category__item-title skeleton-loader-title"></div>
+      </div>
+    `;
+  }
 
-const createNewRecipesItemTemplate = (recipes) => `
-<a class="new-recipes__item" href="${
-  recipes.key ? `#/detail/${recipes.key}` : `#/detail/${recipes.id}`
-}">
-    <div class="new-recipes__item-image">
-    <img src="${recipes.thumb}" alt="${recipes.title}">
-    </div>
-    <div class="new-recipes__item-text">
-    <h4>${recipes.title}</h4>
-    <div class="recipes-info">
-        
-        ${
-          recipes.times
-            ? `<div class="recipes-info__item"><i class='bx bx-timer'></i><p>${recipes.times}</p></div>`
-            : ''
-        }
-        ${
-          recipes.difficulty
-            ? `<div class="recipes-info__item"><i class='bx bx-line-chart'></i><p>${recipes.difficulty}</p></div>`
-            : ''
-        }
-        ${
-          recipes.calories
-            ? `<div class="recipes-info__item"><i class='<i class='bx bx-cookie'></i>'></i><p>${recipes.calories}</p></div>`
-            : ''
-        }
-    </div>
-    </div>
-</a> 
-`;
+  // Tampilkan item kategori yang sebenarnya jika tidak dalam proses loading
+  return `
+    <a id="${category.key}" class="category__item" href="#/resep?category=${category.key}">
+      <div class="category__item-image">
+        <img src="${category.img}" alt="${category.category}">
+      </div>
+      <h4 class="category__item-title">${category.category}</h4>
+    </a>
+  `;
+};
 
-const createNewArticlesItemTemplate = (
-  article,
-) => ` 	<li class="splide__slide"><a class="article__item" href="">
-<div class="article__item-image">
-  <img src="${article.thumb}" alt="${article.title}">
-</div>
-<div class="article__item-text">
-  <h4>${article.title}</h4>
-</div>
-</a>
-</li>
-`;
+const createNewRecipesItemTemplate = (recipes, isLoading = false) => {
+  if (isLoading) {
+    // Tampilkan skeleton loader jika sedang dalam proses loading
+    return `
+      <div class="new-recipes__item skeleton-loader">
+        <div class="new-recipes__item-image skeleton-loader-image"></div>
+        <div class="new-recipes__item-text">
+          <div class="skeleton-loader-title"></div>
+          <div class="skeleton-loader-title"></div>
+          <div class="skeleton-loader-title"></div>
+          <div class="recipes-info">
+            <div class="recipes-info__item skeleton-loader-info"></div>
+            <div class="recipes-info__item skeleton-loader-info"></div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
 
-const recipeDetailTemplate = (recipe) => {
+  // Tampilkan item resep yang sebenarnya jika tidak dalam proses loading
+  return `
+    <a class="new-recipes__item" href="${
+      recipes.key ? `#/detail/${recipes.key}` : `#/detail/${recipes.id}`
+    }">
+      <div class="new-recipes__item-image">
+        <img src="${recipes.thumb}" alt="${recipes.title}">
+      </div>
+      <div class="new-recipes__item-text">
+        <h4>${recipes.title}</h4>
+        <div class="recipes-info">
+          ${
+            recipes.times
+              ? `<div class="recipes-info__item"><i class='bx bx-timer'></i><p>${recipes.times}</p></div>`
+              : ''
+          }
+          ${
+            recipes.difficulty
+              ? `<div class="recipes-info__item"><i class='bx bx-line-chart'></i><p>${recipes.difficulty}</p></div>`
+              : ''
+          }
+          ${
+            recipes.calories
+              ? `<div class="recipes-info__item"><i class='bx bx-cookie'></i><p>${recipes.calories}</p></div>`
+              : ''
+          }
+        </div>
+      </div>
+    </a>
+  `;
+};
+
+const createNewArticlesItemTemplate = (article, isLoading = false) => {
+  if (isLoading) {
+    // Tampilkan skeleton loader jika sedang dalam proses loading
+    return `
+      <li class="splide__slide">
+        <div class="article__item skeleton-loader">
+          <div class="article__item-image skeleton-loader-image">
+          </div>
+          <div class="article__item-text skeleton-loader-text">
+          <div class="skeleton-loader-title"></div>
+          <div class="skeleton-loader-title"></div>
+          </div>
+      </li>
+    `;
+  }
+
+  // Tampilkan item artikel yang sebenarnya jika tidak dalam proses loading
+  return `
+    <li class="splide__slide">
+      <a class="article__item" href="#/artikel/${article._id}">
+        <div class="article__item-image">
+          <img src="${article.thumb}" alt="${article.title}" width="500" height="300">
+        </div>
+        <div class="article__item-text">
+          <h4>${article.title}</h4>
+        </div>
+      </a>
+    </li>
+  `;
+};
+
+const recipeDetailTemplate = (recipe, isLoading = false) => {
+  if (isLoading) {
+    // Tampilkan skeleton loader jika sedang dalam proses loading
+    return `
+      <div class="button-back-container skeleton-button">
+      </div>
+      <div class="recipe-detail-wrapper skeleton-loader">
+        <div class="recipe-detail-text">
+          <div class="skeleton-loader-title"></div>
+          <div class="skeleton-loader-title"></div>
+          <div class="skeleton-loader-title"></div>
+          <div class="skeleton-loader-title"></div>
+          <div class="skeleton-loader-title"></div>
+        </div>
+        <div class="recipe__item-image skeleton-loader-image"></div>
+        <div class="recipes-info">
+          <div class="recipes-info__item skeleton-loader-info"></div>
+          <div class="recipes-info__item skeleton-loader-info"></div>
+          <div class="recipes-info__item skeleton-loader-info"></div>
+        </div>
+      </div>
+      <div class="ingredients-steps-wrapper skeleton-loader">
+        <div class="recipe-ingredients">
+          <div class="recipe-ingredients__info">
+            <div>
+              <div class="skeleton-loader-title"></div>
+              <div class="skeleton-loader-title"></div>
+              <div class="skeleton-loader-title"></div>
+              <div class="skeleton-loader-title"></div>
+              <div class="skeleton-loader-title"></div>
+              <div class="skeleton-loader-title"></div>
+              <div class="skeleton-loader-title"></div>
+              <div class="skeleton-loader-title"></div>
+              <div class="skeleton-loader-title"></div>
+            </div>
+          </div>
+        </div>
+        <div class="recipe-steps">
+          <div class="recipe-steps__info">
+            <div>
+              <div class="skeleton-loader-title"></div>
+              <div class="skeleton-loader-title"></div>
+              <div class="skeleton-loader-title"></div>
+              <div class="skeleton-loader-title"></div>
+              <div class="skeleton-loader-title"></div>
+              <div class="skeleton-loader-title"></div>
+              <div class="skeleton-loader-title"></div>
+              <div class="skeleton-loader-title"></div>
+              <div class="skeleton-loader-title"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
   let ingredients = '';
   let steps = '';
 
@@ -65,7 +171,7 @@ const recipeDetailTemplate = (recipe) => {
 
   const htmlStr = `
     <div class="button-back-container">
-       <a class="button-back" href="#/beranda"><i class='bx bx-chevron-left'></i>Kembali</a>
+      <a class="button-back" href="#/resep"><i class='bx bx-chevron-left'></i>Kembali</a>
     </div>
     <div class="recipe-detail-wrapper">
       <div class="recipe-detail-text">
@@ -86,28 +192,93 @@ const recipeDetailTemplate = (recipe) => {
             ? `<div class="recipes-info__item"><i class='bx bx-line-chart'></i><p>${recipe.difficulty}</p></div>`
             : ''
         }
+        ${
+          recipe.calories
+            ? `<div class="recipes-info__item"><i class='bx bx-cookie'></i><p>${recipes.calories}</p></div>`
+            : ''
+        }
       </div>
     </div>
     <div class="ingredients-steps-wrapper">
-    <div class="recipe-ingredients">
-      <h3 tabindex="0">Bahan-bahan</h3>
-      <div class="recipe-ingredients__info">
-        <ul>
-          ${ingredients}
-        </ul>
+      <div class="recipe-ingredients">
+        <h3 tabindex="0">Bahan-bahan</h3>
+        <div class="recipe-ingredients__info">
+          <ul>
+            ${ingredients}
+          </ul>
+        </div>
       </div>
-    </div>
-    <div class="recipe-steps">
-      <h3 tabindex="0">Cara Membuat</h3>
-      <div class="recipe-steps__info">
-        <ol>
-          ${steps}
-        </ol>
+      <div class="recipe-steps">
+        <h3 tabindex="0">Cara Membuat</h3>
+        <div class="recipe-steps__info">
+          <ol>
+            ${steps}
+          </ol>
+        </div>
       </div>
-    </div>
     </div>
   `;
 
+  return htmlStr;
+};
+
+const articleDetailTemplate = (article, isLoading = false) => {
+  if (isLoading) {
+    // Tampilkan skeleton loader jika sedang dalam proses loading
+    return `
+    <div class="button-back-container skeleton-button">
+    </div>
+    <div class="article-detail-text">
+        <div class="skeleton-loader-title"></div>
+        <div class="skeleton-loader-title"></div>
+        <div class="skeleton-loader-title"></div>
+        <div class="skeleton-loader-title"></div>
+        <div class="skeleton-loader-title"></div>
+    </div>
+    <div class="article-detail-image skeleton-loader-image">
+    </div>
+    <div class="article-detail-content">
+        <div class="skeleton-loader-title"></div>
+        <div class="skeleton-loader-title"></div>
+        <div class="skeleton-loader-title"></div>
+        <div class="skeleton-loader-title"></div>
+        <div class="skeleton-loader-title"></div>
+        <div class="skeleton-loader-title"></div>
+        <div class="skeleton-loader-title"></div>
+        <div class="skeleton-loader-title"></div>
+        <div class="skeleton-loader-title"></div>
+    </div>
+    <div class="article-detail-content">
+      <div class="skeleton-loader-title"></div>
+      <div class="skeleton-loader-title"></div>
+      <div class="skeleton-loader-title"></div>
+      <div class="skeleton-loader-title"></div>
+      <div class="skeleton-loader-title"></div>
+      <div class="skeleton-loader-title"></div>
+      <div class="skeleton-loader-title"></div>
+      <div class="skeleton-loader-title"></div>
+      <div class="skeleton-loader-title"></div>
+  </div>
+`;
+  }
+
+  let articleContent = article.sanitizedHtml;
+  let Content = articleContent.replace(/\n/g, '');
+  const htmlStr = `
+    <div class="button-back-container">
+        <a class="button-back" href="#/artikel"><i class="bx bx-chevron-left"></i>Kembali</a>
+    </div>
+    <div class="article-detail-text">
+        <h2>${article.title}</h2>
+        <p>${article.desc}</p>
+    </div>
+    <div class="article-detail-image">
+        <img src="${article.thumb}" alt="${article.title}" />
+    </div>
+    <div class="article-detail-content">
+        <p>${Content}</p>
+    </div>
+    `;
   return htmlStr;
 };
 
@@ -128,6 +299,7 @@ export {
   createNewRecipesItemTemplate,
   createNewArticlesItemTemplate,
   recipeDetailTemplate,
+  articleDetailTemplate,
   createLikeButtonTemplate,
   createLikedButtonTemplate,
 };

@@ -7,33 +7,43 @@ const ResepDetail = {
   async render() {
     return `
       <section id="recipe" class="recipe">
-     </section>
-       <div id="likeButtonContainer"></div>
+      </section>
+      <div id="likeButtonContainer"></div>
     `;
   },
 
   async afterRender() {
     const url = UrlParser.parseActiveUrlWithoutCombiner();
-    const recipe = await DataSource.recipeDetail(url.id);
 
-    if (recipe) {
-      const recipeContainer = document.querySelector('#recipe');
-      recipeContainer.innerHTML = recipeDetailTemplate(recipe);
+    // Tampilkan skeleton loader
+    const recipeContainer = document.querySelector('#recipe');
+    recipeContainer.innerHTML = recipeDetailTemplate({}, true);
 
-      LikeButtonInitiator.init({
-        likeButtonContainer: document.querySelector('#likeButtonContainer'),
-        recipe: {
-          id: recipe.key,
-          title: recipe.title,
-          thumb: recipe.thumb,
-          times: recipe.times,
-          difficulty: recipe.difficulty,
+    try {
+      const recipe = await DataSource.recipeDetail(url.id);
 
-        },
-      });
-    } else {
-      const errorMessage = 'Maaf, resep tidak ditemukan.';
-      const recipeContainer = document.querySelector('#recipe');
+      if (recipe) {
+        // Tampilkan konten sebenarnya dan hapus skeleton loader
+        recipeContainer.innerHTML = recipeDetailTemplate(recipe, false);
+
+        // Inisialisasi Like Button
+        LikeButtonInitiator.init({
+          likeButtonContainer: document.querySelector('#likeButtonContainer'),
+          recipe: {
+            id: recipe.key,
+            title: recipe.title,
+            thumb: recipe.thumb,
+            times: recipe.times,
+            difficulty: recipe.difficulty,
+          },
+        });
+      } else {
+        const errorMessage = 'Maaf, resep tidak ditemukan.';
+        recipeContainer.innerHTML = `<p>${errorMessage}</p>`;
+      }
+    } catch (error) {
+      console.error('Error fetching recipe details:', error);
+      const errorMessage = 'Terjadi kesalahan dalam mengambil data resep.';
       recipeContainer.innerHTML = `<p>${errorMessage}</p>`;
     }
   },

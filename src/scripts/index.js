@@ -18,3 +18,32 @@ window.addEventListener('hashchange', () => {
 window.addEventListener('load', async () => {
   app.renderPage();
 });
+
+const favicon = document.querySelector('link[rel="icon"]');
+
+if (
+  window.matchMedia &&
+  window.matchMedia('(prefers-color-scheme: dark)').matches
+) {
+  favicon.href = './favicon-dark.png';
+} else {
+  favicon.href = './favicon.png';
+}
+
+const header = document.querySelector('.app-bar');
+let lastScrollTop = 0;
+
+window.addEventListener('scroll', () => {
+  scrollHide();
+});
+
+function scrollHide() {
+  const st = window.scrollY || document.documentElement.scrollTop;
+  console.log(st);
+  if (st > lastScrollTop) {
+    header.classList.add('hide');
+  } else {
+    header.classList.remove('hide');
+  }
+  lastScrollTop = st <= 0 ? 0 : st;
+}

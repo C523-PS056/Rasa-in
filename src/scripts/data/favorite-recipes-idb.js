@@ -18,7 +18,7 @@ const FavoriteRecipeIdb = {
     }
     return (await dbPromise).get(OBJECT_STORE_NAME, id);
   },
-  async getAllRecipe() {
+  async getAllRecipes() {
     return (await dbPromise).getAll(OBJECT_STORE_NAME);
   },
   async putRecipe(recipe) {

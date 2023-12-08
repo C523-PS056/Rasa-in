@@ -30,12 +30,11 @@ const Beranda = {
           <input
             type="text"
             id="cariResep"
-            name="cariResep"
             placeholder="Mau masak apa hari ini ?"
           />
         </div>
         <div class="button-container">
-          <button class="button"  type="submit">Temukan</button>
+          <a class="button" id="temukanButton">Temukan</a>
         </div>
       </div>
       </form>
@@ -71,7 +70,7 @@ const Beranda = {
   </div>
   </div>
   <div class="button-container">
-    <button class="button button-large"  type="submit">Lihat Selengkapnya</button>
+    <a href="#/artikel" class="button button-large"  type="submit">Lihat Selengkapnya</a>
   </div>
 </section>
 
@@ -81,23 +80,66 @@ const Beranda = {
   <p>Rasa-IN (Rasa Indonesia Nusantara)  adalah website yang menyediakan informasi resep-resep masakan nusantara.</p>
 </div>
 <div class="about-us-galery">
-  <div class="about-us-galery__item"><img src="./images/about-us/cakra.jpeg" alt=""></div>
-  <div class="about-us-galery__item"><h2>LOGO</h2></div>
   <div class="about-us-galery__item"><h2>Rasa-IN</h2> </div>
+  <div class="about-us-galery__item"><img src="./images/about-us/cakra.jpg" alt=""></div>
   <div class="about-us-galery__item"><img src="./images/about-us/ganteng.jpg" alt=""></div>
-  <div class="about-us-galery__item"><img src="./images/about-us/ari.jpg" alt=""></div>
   <div class="about-us-galery__item"><p>Rasa Indonesia Nusantara</p></div>
+  <div class="about-us-galery__item"><img src="./images/about-us/ari.jpg" alt=""></div>
   <div class="about-us-galery__item"><img src="./images/about-us/tri.jpg" alt=""></div>
-  <div class="about-us-galery__item"></div>
 </div>
 </section>      
       `;
   },
 
   async afterRender() {
-    // categories
+    // Optionally, you can add an event listener to the button as well
+    document
+      .getElementById('temukanButton')
+      .addEventListener('click', function () {
+        const nilaiInput = document.getElementById('cariResep').value;
+        window.location.href = `#/resep?s=${nilaiInput}`;
+      });
+
+    document
+      .getElementById('cariResep')
+      .addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          const nilaiInput = e.target.value;
+          window.location.href = `#/resep?s=${nilaiInput}`;
+        }
+      });
+
+    if (window.location.hash) {
+      const el = document.querySelector(window.location.hash);
+      if (el) {
+        el.scrollIntoView();
+      }
+    }
+
+    this.renderCategories();
+    this.renderNewRecipes();
+    this.renderNewArticles();
+
+    // fetch
     const categories = await DataSource.recipeCategory();
+    this.renderCategories(categories);
+
+    const newRecipes = await DataSource.newRecipe(1);
+    this.renderNewRecipes(newRecipes);
+
+    const newArticles = await DataSource.newArticles();
+    this.renderNewArticles(newArticles);
+
+    // jangan render jika pindah page
+    if (window.location.hash && window.location.hash !== '#tentang-kami') {
+      return;
+    }
+  },
+
+  renderCategories(categories = [...Array(10)]) {
+    // categories
     const categoryContainer = document.querySelector('.category-container');
+    categoryContainer.innerHTML = '';
 
     // Menentukan jumlah item yang akan ditampilkan sesuai dengan lebar layar
     const screenWidth = window.innerWidth;
@@ -113,8 +155,10 @@ const Beranda = {
 
     const limitedCategories = categories.slice(0, numberOfItemsToShow);
     limitedCategories.forEach((category) => {
-      categoryContainer.innerHTML +=
-        createCategoryRecipesItemTemplate(category);
+      categoryContainer.innerHTML += createCategoryRecipesItemTemplate(
+        category,
+        !category,
+      );
     });
 
     const loadMoreButton = document.querySelector('#loadMoreCategories');
@@ -131,43 +175,48 @@ const Beranda = {
         loadMoreButton.style.display = 'none';
       });
     }
+  },
 
+  renderNewRecipes(newRecipes = [...Array(6)]) {
     // new recipes
-    const newRecipes = await DataSource.newRecipe();
-    const limitNewRecipes = newRecipes.slice(0, 6);
     const newRecipesContainer = document.querySelector('.recipes-container');
+    newRecipesContainer.innerHTML = '';
+    const limitNewRecipes = newRecipes.slice(0, 6);
 
     limitNewRecipes.forEach((recipe) => {
-      newRecipesContainer.innerHTML += createNewRecipesItemTemplate(recipe);
+      newRecipesContainer.innerHTML += createNewRecipesItemTemplate(
+        recipe,
+        !recipe,
+      );
     });
+  },
 
+  renderNewArticles(newArticles = [...Array(6)]) {
     // new articles
-
-    const newArticles = await DataSource.newArticles();
-    const limitNewArticles = newArticles.slice(0, 6);
     const newArticlesContainer = document.querySelector('.splide__list');
-    limitNewArticles.forEach((article) => {
-      newArticlesContainer.innerHTML += createNewArticlesItemTemplate(article);
-    });
+    newArticlesContainer.innerHTML = '';
 
+    const limitNewArticles = newArticles.slice(0, 6);
+    limitNewArticles.forEach((article) => {
+      newArticlesContainer.innerHTML += createNewArticlesItemTemplate(
+        article,
+        !article,
+      );
+    });
     var splide = new Splide('.splide', {
       type: 'loop',
       gap: '1.5rem',
       perPage: 3,
-      autoWidth: true,
-      autoplay: true,
-      perMove: 1,
       pagination: false,
+      autoplay: false,
       breakpoints: {
-        640: {
+        768: {
           perPage: 2,
           gap: '.7rem',
-          autoWidth: true,
         },
         480: {
           perPage: 1,
           gap: '.7rem',
-          autoWidth: false,
         },
       },
     });
