@@ -39,7 +39,6 @@ window.addEventListener('scroll', () => {
 
 function scrollHide() {
   const st = window.scrollY || document.documentElement.scrollTop;
-  console.log(st);
   if (st > lastScrollTop) {
     header.classList.add('hide');
   } else {

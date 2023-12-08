@@ -122,18 +122,17 @@ const Beranda = {
 
     // fetch
     const categories = await DataSource.recipeCategory();
-    this.renderCategories(categories);
-
     const newRecipes = await DataSource.newRecipe(1);
-    this.renderNewRecipes(newRecipes);
-
     const newArticles = await DataSource.newArticles();
-    this.renderNewArticles(newArticles);
 
     // jangan render jika pindah page
     if (window.location.hash && window.location.hash !== '#tentang-kami') {
       return;
     }
+
+    this.renderCategories(categories);
+    this.renderNewRecipes(newRecipes);
+    this.renderNewArticles(newArticles);
   },
 
   renderCategories(categories = [...Array(10)]) {

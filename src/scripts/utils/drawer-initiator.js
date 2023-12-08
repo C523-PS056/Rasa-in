@@ -32,7 +32,15 @@ const DrawerInitiator = {
 
     navLinks.forEach((link) => {
       const linkPath = link.getAttribute('href');
-      if (linkPath === `#${currentPath}`) {
+
+      // Check if it's the home link ("/", "#", or "")
+      const isHomeLink =
+        linkPath === '#' || linkPath === '/' || linkPath === '';
+
+      // Check if the link is the home link and currentPath is empty
+      if (isHomeLink && (!currentPath || currentPath === '/')) {
+        link.classList.add('active');
+      } else if (linkPath === `#${currentPath}`) {
         link.classList.add('active');
       } else {
         link.classList.remove('active');
