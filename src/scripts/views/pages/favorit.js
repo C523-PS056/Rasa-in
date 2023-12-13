@@ -1,4 +1,5 @@
 import FavoriteRecipeIdb from '../../data/favorite-recipes-idb';
+import scrollToTop from '../../utils/scroll-to-top';
 import { createNewRecipesItemTemplate } from '../templates/template-creator';
 
 const Favorit = {
@@ -9,7 +10,7 @@ const Favorit = {
     return `
       <section class="page">
         <div class="button-back-container">
-          <a class="button-back" href=""><i class='bx bx-chevron-left'></i>Kembali</a>
+          <a class="button-back" href="#"><i class='bx bx-chevron-left'></i>Kembali</a>
         </div>
         <div class="page-text">
           <h2 class="page-title">Resep Favorit</h2>
@@ -97,6 +98,7 @@ function renderPagination(currentPage, totalItems, container) {
         Favorit.filteredRecipes.length,
         paginationContainer,
       );
+      scrollToTop();
     });
     paginationContainer.appendChild(prevButton);
 
@@ -110,6 +112,7 @@ function renderPagination(currentPage, totalItems, container) {
           Favorit.filteredRecipes.length,
           paginationContainer,
         );
+        scrollToTop();
       });
 
       paginationContainer.appendChild(button);
@@ -125,6 +128,7 @@ function renderPagination(currentPage, totalItems, container) {
         Favorit.filteredRecipes.length,
         paginationContainer,
       );
+      scrollToTop();
     });
     paginationContainer.appendChild(nextButton);
   }

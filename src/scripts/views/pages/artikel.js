@@ -1,4 +1,5 @@
 import DataSource from '../../data/data-source';
+import scrollToTop from '../../utils/scroll-to-top';
 import { createNewArticlesItemTemplate } from '../templates/template-creator';
 
 const Artikel = {
@@ -9,7 +10,7 @@ const Artikel = {
     return `
     <section class="page">
       <div class="button-back-container">
-        <a class="button-back" href=""><i class='bx bx-chevron-left'></i>Kembali</a>
+        <a class="button-back" href="#"><i class='bx bx-chevron-left'></i>Kembali</a>
       </div>
       <div class="page-text">
         <h2 class="page-title">Artikel</h2>
@@ -28,6 +29,9 @@ const Artikel = {
       <h3>Artikel Terbaru</h3>
       <div class="article-container" id="articleContainer"></div>
       <div class="pagination-container" id="paginationContainer"></div>
+      <div class="button-add-article-container">
+        <a class="button-add-article" href="#/tambah-artikel"><i class='bx bx-plus'></i></a>
+      </div>
     </section>
   `;
   },
@@ -35,6 +39,9 @@ const Artikel = {
   async afterRender() {
     renderArticles(1);
     const articles = await DataSource.newArticles();
+    if (!window.location.hash.startsWith('#/artikel')) {
+      return;
+    }
     Artikel.filteredArticles = articles; // Assign to filteredArticles at a higher scope
     Artikel.articlesContainer = document.getElementById('articleContainer'); // Assign to articlesContainer at a higher scope
     const searchInput = document.getElementById('cariArtikel');
@@ -99,6 +106,7 @@ function renderPagination(currentPage, totalItems, container) {
         Artikel.filteredArticles.length,
         paginationContainer,
       );
+      scrollToTop();
     });
     paginationContainer.appendChild(prevButton);
 
@@ -113,6 +121,7 @@ function renderPagination(currentPage, totalItems, container) {
           Artikel.filteredArticles.length,
           paginationContainer,
         );
+        scrollToTop();
       });
 
       paginationContainer.appendChild(button);
@@ -129,6 +138,7 @@ function renderPagination(currentPage, totalItems, container) {
         Artikel.filteredArticles.length,
         paginationContainer,
       );
+      scrollToTop();
     });
     paginationContainer.appendChild(nextButton);
   }

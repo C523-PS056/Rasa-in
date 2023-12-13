@@ -4,6 +4,7 @@ import '../styles/style.css';
 import '../styles/responsive.css';
 import '@splidejs/splide/css';
 import App from './views/app';
+import scrollToTop from './utils/scroll-to-top';
 
 const app = new App({
   button: document.querySelector('#hamburgerButton'),
@@ -13,10 +14,12 @@ const app = new App({
 
 window.addEventListener('hashchange', () => {
   app.renderPage();
+  scrollToTop();
 });
 
 window.addEventListener('load', async () => {
   app.renderPage();
+  scrollToTop();
 });
 
 const favicon = document.querySelector('link[rel="icon"]');

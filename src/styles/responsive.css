@@ -7,7 +7,7 @@
   .app-bar {
     padding: 1rem 2.5rem;
   }
-  .app-bar__brand h1 {
+  .app-bar__brand a {
     font-size: 2rem;
     line-height: 2rem;
   }
@@ -90,7 +90,8 @@
     margin-top: 0;
   }
 
-  .search-container label {
+  .search-container label,
+  #articleForm label {
     font-size: 1rem;
   }
 
@@ -309,8 +310,11 @@
   /* end recipe detail  */
 
   /* like button */
-  .like {
-    right: 2rem;
+  .like,
+  .button-add-article-container {
+    font-size: 2rem;
+    padding: 1rem;
+    right: 2.5rem;
   }
 
   /* end like button */
@@ -335,7 +339,21 @@
     border-radius: 0.75rem;
   }
   /* end article detail */
+  /* add article */
+  #articleForm {
+    grid-template-columns: 1fr 3fr;
+    gap: 1rem;
+  }
+
+  #articleForm .button-container {
+    grid-column: 1/3;
+  }
+  #articleForm label {
+    justify-content: space-between;
+  }
 }
+
+/* end add article */
 
 /* desktop */
 
@@ -398,6 +416,22 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
   }
+
+  .article-detail-image:nth-child(2) {
+    position: absolute;
+    box-shadow: rgb(69, 69, 69) 0px 20px 30px -10px;
+  }
+
+  .article-detail-image:nth-child(1),
+  .article-detail-image:nth-child(3) {
+    height: 25rem;
+    display: block;
+    margin: 2rem 0;
+    filter: blur(2px) brightness(70%);
+    -webkit-filter: blur(2px) brightness(70%);
+    -moz-filter: blur(2px) brightness(70%);
+  }
+
   /* end artikel */
 
   /* about-us */
@@ -425,7 +459,8 @@
   /* end footer */
 
   /* like button */
-  .like {
+  .like,
+  .button-add-article-container {
     right: 4rem;
   }
 
@@ -436,5 +471,17 @@
   main {
     width: 1280px;
     margin: auto;
+  }
+  .app-bar__navigation {
+    left: calc((-100vw + 1280px) / 2);
+  }
+
+  .like,
+  .button-add-article-container {
+    right: calc((100vw - 1280px) / 2 + 4rem);
+  }
+  .article-detail-image:nth-child(1),
+  .article-detail-image:nth-child(3) {
+    height: 27.5rem;
   }
 }

@@ -1,11 +1,10 @@
+import Splide, { SLIDE } from '@splidejs/splide';
 import DataSource from '../../data/data-source';
 import {
   createNewRecipesItemTemplate,
   createCategoryRecipesItemTemplate,
   createNewArticlesItemTemplate,
 } from '../templates/template-creator';
-
-import Splide from '@splidejs/splide';
 
 const Beranda = {
   async render() {
@@ -64,9 +63,7 @@ const Beranda = {
 <section class="article" aria-label="artikel terbaru">\
   <h2 class="section-title">Artikel Terbaru</h2>
   <div class="splide">
-  <div class="splide__track ">
-		<ul class="splide__list">
-		</ul>
+  <div class="splide__track "><ul class="splide__list"></ul>
   </div>
   </div>
   <div class="button-container">
@@ -93,21 +90,17 @@ const Beranda = {
 
   async afterRender() {
     // Optionally, you can add an event listener to the button as well
-    document
-      .getElementById('temukanButton')
-      .addEventListener('click', function () {
-        const nilaiInput = document.getElementById('cariResep').value;
-        window.location.href = `#/resep?s=${nilaiInput}`;
-      });
+    document.getElementById('temukanButton').addEventListener('click', () => {
+      const nilaiInput = document.getElementById('cariResep').value;
+      window.location.href = `#/resep?s=${nilaiInput}`;
+    });
 
-    document
-      .getElementById('cariResep')
-      .addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') {
-          const nilaiInput = e.target.value;
-          window.location.href = `#/resep?s=${nilaiInput}`;
-        }
-      });
+    document.getElementById('cariResep').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const nilaiInput = e.target.value;
+        window.location.href = `#/resep?s=${nilaiInput}`;
+      }
+    });
 
     if (window.location.hash) {
       const el = document.querySelector(window.location.hash);
@@ -122,16 +115,34 @@ const Beranda = {
 
     // fetch
     const categories = await DataSource.recipeCategory();
-    const newRecipes = await DataSource.newRecipe(1);
-    const newArticles = await DataSource.newArticles();
-
     // jangan render jika pindah page
     if (window.location.hash && window.location.hash !== '#tentang-kami') {
       return;
     }
-
     this.renderCategories(categories);
+
+    const categoryContainer = document.querySelector('.category-container');
+    const loadMoreButton = document.querySelector('#loadMoreCategories');
+
+    loadMoreButton.addEventListener('click', () => {
+      categoryContainer.innerHTML = '';
+      categories.forEach((category) => {
+        categoryContainer.innerHTML +=
+          createCategoryRecipesItemTemplate(category);
+      });
+
+      loadMoreButton.style.display = 'none';
+    });
+
+    const newRecipes = await DataSource.newRecipe(1);
+    if (window.location.hash && window.location.hash !== '#tentang-kami') {
+      return;
+    }
     this.renderNewRecipes(newRecipes);
+    const newArticles = await DataSource.newArticles();
+    if (window.location.hash && window.location.hash !== '#tentang-kami') {
+      return;
+    }
     this.renderNewArticles(newArticles);
   },
 
@@ -161,18 +172,8 @@ const Beranda = {
     });
 
     const loadMoreButton = document.querySelector('#loadMoreCategories');
-    if (categories.length == limitedCategories.length) {
+    if (categories.length === limitedCategories.length) {
       loadMoreButton.style.display = 'none';
-    } else {
-      loadMoreButton.addEventListener('click', () => {
-        categoryContainer.innerHTML = '';
-        categories.forEach((category) => {
-          categoryContainer.innerHTML +=
-            createCategoryRecipesItemTemplate(category);
-        });
-
-        loadMoreButton.style.display = 'none';
-      });
     }
   },
 
@@ -190,24 +191,19 @@ const Beranda = {
     });
   },
 
-  renderNewArticles(newArticles = [...Array(6)]) {
+  renderNewArticles(newArticles = [...Array(9)]) {
     // new articles
     const newArticlesContainer = document.querySelector('.splide__list');
     newArticlesContainer.innerHTML = '';
 
-    const limitNewArticles = newArticles.slice(0, 6);
+    const limitNewArticles = newArticles.slice(0, 9);
     limitNewArticles.forEach((article) => {
       newArticlesContainer.innerHTML += createNewArticlesItemTemplate(
         article,
         !article,
       );
     });
-    var splide = new Splide('.splide', {
-      type: 'loop',
-      gap: '1.5rem',
-      perPage: 3,
-      pagination: false,
-      autoplay: false,
+    const splide = new Splide('.splide', {
       breakpoints: {
         768: {
           perPage: 2,
@@ -218,6 +214,12 @@ const Beranda = {
           gap: '.7rem',
         },
       },
+      autoplay: true,
+      gap: '1.5rem',
+      pagination: false,
+      perPage: 3,
+      perMove: 1,
+      type: 'loop',
     });
     splide.mount();
   },

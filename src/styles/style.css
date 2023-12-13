@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Raleway:wght@400;500;600;700&display=swap');
 
 * {
-  scroll-padding: 4rem;
+  scroll-padding: 6rem;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -30,6 +30,9 @@ body {
   flex-direction: column;
 }
 
+button {
+  cursor: pointer;
+}
 /* Skip to content */
 
 .skip-link {
@@ -79,9 +82,16 @@ body {
 
 .app-bar__brand {
   z-index: 20;
+  cursor: pointer;
 }
 
-.app-bar__brand h1 {
+.app-bar__brand a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: none;
+  color: #000;
+  font-family: 'raleway', sans-serif;
   font-size: 1.75rem;
   font-weight: 700;
   line-height: 1.75rem;
@@ -125,17 +135,16 @@ body {
 
 .app-bar__navigation {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: -100vh;
+  top: -125vh;
   padding: 5rem 0;
-  width: 100%;
-  height: 100vh;
-  background: #ededed;
+  width: 100vw;
+  height: 125vh;
+  background: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 15;
+  left: 0;
   transition: all 0.5s;
 }
 
@@ -146,6 +155,7 @@ body {
   min-width: 50vw;
   margin: 0 auto;
   gap: 1.25rem;
+  margin-bottom: 25vh;
 }
 
 .app-bar__navigation ul li {
@@ -239,6 +249,10 @@ section {
   text-align: start;
 }
 
+.button-container:hover {
+  background-color: #2c2c2c;
+}
+
 .button-container {
   display: flex;
   align-items: center;
@@ -246,6 +260,7 @@ section {
   overflow: hidden;
   background-color: #0f0f0f;
   border-radius: 0.5rem;
+  cursor: pointer;
 }
 
 .button-container .button {
@@ -380,12 +395,14 @@ p {
   box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.15);
 }
 
-.search-container label {
+.search-container label,
+#articleForm label {
   font-size: 0.875rem;
   font-weight: 600;
 }
 
-.search-input {
+.search-input,
+.input-container {
   display: flex;
   flex: 1;
   position: relative;
@@ -396,13 +413,24 @@ p {
   border: 1px solid #0f0f0f;
 }
 
-.search-input input {
+.search-input:focus-within,
+.input-container:focus-within {
+  outline: 1px solid #0f0f0f;
+}
+
+.search-input input,
+.input-container input {
   flex: 1;
   font-size: 0.875rem;
   line-height: 150%;
   padding: 0.8rem 2rem;
-  color: rgba(146, 146, 146, 1);
+  color: #000;
   border: none;
+}
+
+.search-input input:focus,
+.input-container input:focus {
+  outline: none;
 }
 
 .search-input i {
@@ -474,6 +502,11 @@ p {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
+}
+
+.not-found {
+  margin-top: 1rem;
+  grid-column: 1/6;
 }
 
 .new-recipes__item {
@@ -591,7 +624,7 @@ p {
 }
 
 .article__item-text {
-  z-index: 5;
+  z-index: 3;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -766,6 +799,7 @@ footer {
   border-radius: 0.25rem;
   color: #fff;
   font-size: 1rem;
+  border: none;
 }
 
 /* end pagination */
@@ -876,7 +910,8 @@ footer {
   position: absolute;
 }
 
-.like {
+.like,
+.button-add-article-container {
   font-size: 1.5rem;
   position: fixed;
   bottom: 1.5rem;
@@ -885,13 +920,15 @@ footer {
   color: #000;
   border: 0;
   border-radius: 50%;
-  width: 44px;
-  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  z-index: 4;
+  padding: 0.5rem;
 }
 
 .like.liked {
@@ -938,6 +975,26 @@ footer {
   object-fit: cover;
 }
 
+.article-detail-image-container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  max-height: 35rem;
+}
+
+.article-detail-image:nth-child(2) {
+  position: relative;
+  height: 100%;
+  left: 50%;
+  transform: translatex(-50%);
+  z-index: 2;
+}
+
+.article-detail-image:nth-child(1),
+.article-detail-image:nth-child(3) {
+  display: none;
+}
+
 .article-detail-content p {
   text-align: start;
 }
@@ -954,10 +1011,6 @@ footer {
   margin-top: 0.5rem;
 }
 /* end article detail */
-
-.not-found {
-  text-align: left;
-}
 
 /* skeleton */
 
@@ -1129,3 +1182,183 @@ footer {
 }
 
 /* end skeleton */
+
+/* add-article */
+#articleForm {
+  display: grid;
+  row-gap: 0.5rem;
+}
+
+#articleForm input {
+  padding: 0.5rem 0.75rem;
+  min-height: 44px;
+}
+
+#articleForm label {
+  display: flex;
+  gap: 0.5rem;
+}
+
+#articleForm textarea {
+  font-size: 0.875rem;
+  line-height: 150%;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  resize: none;
+}
+
+.button-add-article {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.button-add-article i {
+  text-align: center;
+  font-weight: bolder;
+  color: #000;
+}
+
+.drop-container {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px dashed #555;
+  color: #444;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out, border 0.2s ease-in-out;
+}
+
+.drop-container:hover {
+  background: #fff;
+  border-color: #111;
+}
+
+.drop-container:hover .drop-title {
+  color: #222;
+}
+
+.drop-title {
+  color: #444;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  transition: color 0.2s ease-in-out;
+}
+
+input[type='file'] {
+  width: 100%;
+  max-width: 20rem;
+  color: #444;
+  padding: 5px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #555;
+}
+
+input[type='file']::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background: #000;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+input[type='file']::file-selector-button:hover {
+  background: #2c2c2c;
+}
+
+#articleForm .button-container {
+  margin-top: 1rem;
+}
+
+/* Add this CSS to your existing styles or create a new CSS file */
+
+.popup,
+.loading-popup {
+  display: none;
+  backdrop-filter: blur(2px);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+
+.popup-container {
+  width: 90vw;
+  max-width: 25rem;
+  margin: auto;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+  position: fixed;
+  padding: 2rem 3rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 0.5rem;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.popup-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-icon i {
+  font-size: 6rem;
+  font-weight: lighter;
+}
+
+.close-button {
+  margin-top: 1rem;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 2rem;
+  background-color: #0f0f0f;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+}
+
+#successPopup {
+  color: #28a745;
+}
+
+#errorPopup {
+  color: #dc3545;
+}
+
+.loading-popup .popup-container {
+  background: none;
+  box-shadow: none;
+}
+
+.error-message {
+  margin-top: 0.2rem;
+  font-size: 0.75rem;
+  color: #dc3545;
+}

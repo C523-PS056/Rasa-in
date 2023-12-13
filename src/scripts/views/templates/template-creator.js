@@ -262,8 +262,8 @@ const articleDetailTemplate = (article, isLoading = false) => {
 `;
   }
 
-  let articleContent = article.sanitizedHtml;
-  let Content = articleContent.replace(/\n/g, '');
+  const articleContent = article.sanitizedHtml;
+  const Content = articleContent.replace(/\n/g, '');
   const htmlStr = `
     <div class="button-back-container">
         <a class="button-back" href="#/artikel"><i class="bx bx-chevron-left"></i>Kembali</a>
@@ -272,15 +272,104 @@ const articleDetailTemplate = (article, isLoading = false) => {
         <h2>${article.title}</h2>
         <p>${article.desc}</p>
     </div>
+    <div class="article-detail-image-container">
     <div class="article-detail-image">
-        <img src="${article.thumb}" alt="${article.title}" />
+    <img src="${article.thumb}" alt="${article.title}" />
+    </div>
+    <div class="article-detail-image">
+    <img src="${article.thumb}" alt="${article.title}" />
+    </div>
+    <div class="article-detail-image">
+    <img src="${article.thumb}" alt="${article.title}" />
+    </div>
     </div>
     <div class="article-detail-content">
         <p>${Content}</p>
     </div>
+    <h3>Penulis : ${article.username}</h3>
     `;
   return htmlStr;
 };
+
+const addArticleTemplate = () => `
+  <div class="button-back-container">
+    <a class="button-back" href="#/artikel"><i class="bx bx-chevron-left"></i>Kembali</a>
+  </div>
+  <div class="page-text">
+  <h2 class="page-title">Tambah Artikel</h2>
+  <p>Tuliskan Artikel Anda di sini dan biarkan pengalaman serta pengetahuan Anda menjadi sumber inspirasi bagi pembaca lainnya.</p>
+  </div>
+  <form id="articleForm">
+    <label for="title">Judul<span>:</span></label>
+    <div class="input-container">
+        <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="Masukkan judul artikel..."
+            required
+            oninvalid="this.setCustomValidity('Ini harus diisi !')"
+            oninput="this.setCustomValidity('')"
+        />
+    </div>
+
+    <label for="desc">Deskripsi singkat<span>:</span></label>
+    <textarea
+        id="desc"
+        name="desc"
+        rows="4"
+        placeholder="Masukkan deskripsi singkat artikel..."
+        required
+        oninvalid="this.setCustomValidity('Ini harus diisi !')"
+        oninput="this.setCustomValidity('')"
+    ></textarea>
+
+    <label for="content">Isi artikel<span>:</span></label>
+    <textarea
+        id="content"
+        name="content"
+        rows="6"
+        placeholder="Masukkan isi artikel..."
+        required
+        oninvalid="this.setCustomValidity('Ini harus diisi !')"
+        oninput="this.setCustomValidity('')"
+    ></textarea>
+
+    <label for="username">Penulis<span>:</span></label>
+    <div class="input-container">
+        <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Masukkan nama anda..."
+            required
+            oninvalid="this.setCustomValidity('Ini harus diisi !')"
+            oninput="this.setCustomValidity('')"
+        />
+    </div>
+
+    <label for="thumb">Thumbnail<span>:</span></label>
+    <div>
+    <label for="thumb" class="drop-container" id="dropContainer">
+        <span class="drop-title">Letakkan file di sini </br>(maks. 2 MB).</span>
+        atau
+        <input
+            type="file"
+            id="thumb"
+            name="thumb"
+            accept="image/*"
+            required
+            oninvalid="this.setCustomValidity('Ini harus diisi !')"
+            oninput="this.setCustomValidity('')"
+        />
+    </label>
+    <div id="fileSizeError" class="error-message"></div>
+    </div>
+    <div class="button-container">
+        <button type="submit" id="submitForm" class="button button-large">Tambah Artikel</button>
+    </div>
+</form>
+`;
 
 const createLikeButtonTemplate = () => `
   <button aria-label="like this recipe" id="likeButton" class="like">
@@ -300,6 +389,7 @@ export {
   createNewArticlesItemTemplate,
   recipeDetailTemplate,
   articleDetailTemplate,
+  addArticleTemplate,
   createLikeButtonTemplate,
   createLikedButtonTemplate,
 };

@@ -1,5 +1,6 @@
 import DataSource from '../../data/data-source';
 import UrlParser from '../../routes/url-parser';
+import scrollToTop from '../../utils/scroll-to-top';
 import { createNewRecipesItemTemplate } from '../templates/template-creator';
 
 const Resep = {
@@ -7,14 +8,14 @@ const Resep = {
     return `
     <section class="page">
     <div class="button-back-container">
-      <a class="button-back" href=""><i class='bx bx-chevron-left'></i>Kembali</a>
+      <a class="button-back" href="#"><i class='bx bx-chevron-left'></i>Kembali</a>
     </div>
     <div class="page-text">
       <h2 class="page-title">Resep Masakan</h2>
       <p>Telusuri kumpulan resep masakan yang kami buat untuk memenuhi kebutuhanmu.</p>
     </div>
     <div class="search-and-filter-wrapper">
-      <form class="search">
+      <div class="search">
         <div class="search-input">
           <i class='bx bx-search' ></i>
           <input
@@ -24,7 +25,7 @@ const Resep = {
             placeholder="Mau masak apa hari ini ?"
             />
         </div>
-      </form>
+      </div>
       <div class="filter-container">
         <select id="filter" class="filter">
           <option value="">Telusuri Berdasarkan</option>
@@ -40,45 +41,55 @@ const Resep = {
 
   async afterRender() {
     const currentURL = window.location.href;
-
     const parsedUrl = UrlParser.parseActiveUrlWithoutCombiner();
     const urlParams = new URLSearchParams(parsedUrl.queryParams);
-
     const searchRecipes = urlParams.get('s');
     const categoryFilter = urlParams.get('category');
     const currentPage = urlParams.get('page');
 
     // Menghapus parameter pencarian sebelum karakter # dan menambahkan parameter 's'
     const cleanURL = currentURL.replace(/\?.*#/, '#');
-
     window.history.replaceState({}, document.title, cleanURL);
 
     const inputElement = document.getElementById('s');
-    inputElement.value = searchRecipes;
 
+    console.log(inputElement);
     inputElement.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
+        event.preventDefault(); // Cegah perilaku pengiriman formulir default
         const newSearchValue = inputElement.value;
         this.manipulateURL(parsedUrl, { s: newSearchValue });
-        // Render resep berdasarkan kategori terpilih setelah manipulasi URL
         this.handleFilterChange();
+        this.setupFilterDropdown(categories);
       }
     });
 
-    this.setupFilterDropdown();
+    inputElement.value = searchRecipes;
+    inputElement.value = decodeURIComponent(searchRecipes ?? '');
 
     this.renderRecipes();
-    let recipes;
+    scrollToTop();
+    // Ambil kategori resep
+    const categories = await DataSource.recipeCategory();
+    if (!window.location.hash.startsWith('#/resep')) {
+      return;
+    }
+    this.setupFilterDropdown(categories);
+
     // Cek apakah ada query pencarian
+    let recipes;
     if (searchRecipes) {
       recipes = await DataSource.searchRecipes(searchRecipes);
     } else {
-      // Ambil resep berdasarkan kategori terpilih atau dapatkan resep baru
       recipes = categoryFilter
         ? await DataSource.recipeByCategory(categoryFilter, currentPage ?? 1)
         : await DataSource.newRecipe(currentPage ?? 1);
     }
-    this.renderRecipes(recipes);
+    this.recipes = recipes; // Simpan hasil pencarian di dalam objek recipes
+    if (!window.location.hash.startsWith('#/resep')) {
+      return;
+    }
+    this.renderRecipes(this.recipes);
     this.renderPagination();
   },
 
@@ -103,14 +114,6 @@ const Resep = {
 
   // Metode untuk merender resep berdasarkan kategori yang dipilih
   renderRecipes(recipes = [...Array(12)]) {
-    const parsedUrl = UrlParser.parseActiveUrlWithoutCombiner();
-    const urlParams = new URLSearchParams(parsedUrl.queryParams);
-
-    const searchRecipes = urlParams.get('s');
-
-    const inputElement = document.getElementById('s');
-    inputElement.value = decodeURIComponent(searchRecipes ?? '');
-
     // Bersihkan kontainer resep
     const recipesContainer = document.querySelector('.recipes-container');
     recipesContainer.innerHTML = '';
@@ -131,10 +134,7 @@ const Resep = {
   },
 
   // Metode untuk mengatur dropdown filter kategori
-  async setupFilterDropdown() {
-    // Ambil kategori resep
-    const categories = await DataSource.recipeCategory();
-
+  async setupFilterDropdown(categories = []) {
     // Dapatkan elemen dropdown
     const dropdown = document.getElementById('filter');
     dropdown.innerHTML = '';
@@ -190,7 +190,7 @@ const Resep = {
     const parsedUrl = UrlParser.parseActiveUrlWithoutCombiner();
     const urlParams = new URLSearchParams(parsedUrl.queryParams);
 
-    const currentPage = urlParams.get('page');
+    const currentPage = urlParams.get('page') ?? 1;
     const paginationContainer = document.querySelector('#paginationContainer');
     const totalPages = 5;
 
@@ -212,7 +212,7 @@ const Resep = {
       paginationContainer.appendChild(prevButton);
 
       // Page buttons
-      for (let i = 1; i <= totalPages; i++) {
+      for (let i = 1; i <= totalPages; i += 1) {
         const button = document.createElement('button');
         button.innerText = i;
         button.addEventListener('click', () => {
@@ -243,9 +243,38 @@ const Resep = {
   },
 
   // Metode untuk menangani perubahan filter kategori
-  handleFilterChange() {
-    // Render resep berdasarkan kategori terpilih atau semua resep jika tidak ada yang terpilih
-    this.afterRender();
+  async handleFilterChange() {
+    const currentURL = window.location.href;
+    const parsedUrl = UrlParser.parseActiveUrlWithoutCombiner();
+    const urlParams = new URLSearchParams(parsedUrl.queryParams);
+    const searchRecipes = urlParams.get('s');
+    const categoryFilter = urlParams.get('category');
+    const currentPage = urlParams.get('page');
+
+    // Menghapus parameter pencarian sebelum karakter # dan menambahkan parameter 's'
+    const cleanURL = currentURL.replace(/\?.*#/, '#');
+    window.history.replaceState({}, document.title, cleanURL);
+
+    const inputElement = document.getElementById('s');
+    inputElement.value = searchRecipes;
+    inputElement.value = decodeURIComponent(searchRecipes ?? '');
+
+    const recipesContainer = document.querySelector('.recipes-container');
+    recipesContainer.innerHTML = '';
+    scrollToTop();
+    this.renderRecipes();
+    // Render ulang resep berdasarkan filter kategori terpilih
+    let recipes;
+    if (searchRecipes) {
+      recipes = await DataSource.searchRecipes(searchRecipes);
+    } else {
+      recipes = categoryFilter
+        ? await DataSource.recipeByCategory(categoryFilter, currentPage ?? 1)
+        : await DataSource.newRecipe(currentPage ?? 1);
+    }
+
+    this.recipes = recipes; // Simpan hasil pencarian di dalam objek recipes
+    this.renderRecipes(recipes);
     this.renderPagination();
   },
 };
