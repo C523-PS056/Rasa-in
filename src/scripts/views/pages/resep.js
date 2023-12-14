@@ -53,7 +53,6 @@ const Resep = {
 
     const inputElement = document.getElementById('s');
 
-    console.log(inputElement);
     inputElement.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
         event.preventDefault(); // Cegah perilaku pengiriman formulir default

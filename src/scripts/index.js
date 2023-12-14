@@ -5,6 +5,7 @@ import '../styles/responsive.css';
 import '@splidejs/splide/css';
 import App from './views/app';
 import scrollToTop from './utils/scroll-to-top';
+import swRegister from './utils/sw-register';
 
 const app = new App({
   button: document.querySelector('#hamburgerButton'),
@@ -13,11 +14,6 @@ const app = new App({
 });
 
 window.addEventListener('hashchange', () => {
-  app.renderPage();
-  scrollToTop();
-});
-
-window.addEventListener('load', async () => {
   app.renderPage();
   scrollToTop();
 });
@@ -49,3 +45,9 @@ function scrollHide() {
   }
   lastScrollTop = st <= 0 ? 0 : st;
 }
+
+window.addEventListener('load', async () => {
+  app.renderPage();
+  scrollToTop();
+  swRegister();
+});

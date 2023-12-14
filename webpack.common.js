@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -43,5 +44,28 @@ module.exports = {
       ],
     }),
     new MiniCssExtractPlugin(),
+    new WorkboxWebpackPlugin.GenerateSW({
+      swDest: './sw.bundle.js',
+      runtimeCaching: [
+        {
+          urlPattern: ({ url }) =>
+            url.href.startsWith(
+              'https://unofficial-masakapahariini-api-olive.vercel.app/',
+            ),
+          handler: 'StaleWhileRevalidate',
+          options: {
+            cacheName: 'resep-api',
+          },
+        },
+        {
+          urlPattern: ({ url }) =>
+            url.href.startsWith('https://rasa-in-backend.vercel.app/'),
+          handler: 'StaleWhileRevalidate',
+          options: {
+            cacheName: 'artikel-api',
+          },
+        },
+      ],
+    }),
   ],
 };
