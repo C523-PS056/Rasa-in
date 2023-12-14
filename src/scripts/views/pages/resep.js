@@ -127,8 +127,7 @@ const Resep = {
       });
     } else {
       // Jika tidak ada resep ditemukan, tampilkan pesan
-      recipesContainer.innerHTML =
-        '<p>Maaf, resep yang kamu cari tidak ditemukan.</p>';
+      recipesContainer.innerHTML = '<p>Maaf, resep yang kamu cari tidak ditemukan.</p>';
     }
   },
 
@@ -229,8 +228,7 @@ const Resep = {
       const nextButton = document.createElement('button');
       nextButton.innerHTML = '<i class="bx bx-chevrons-right"></i>';
       nextButton.addEventListener('click', () => {
-        const nextPage =
-          currentPage < totalPages ? Number(currentPage) + 1 : totalPages;
+        const nextPage = currentPage < totalPages ? Number(currentPage) + 1 : totalPages;
         this.manipulateURL(parsedUrl, {
           category: urlParams.get('category'),
           page: nextPage,

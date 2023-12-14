@@ -45,9 +45,8 @@ const Favorit = {
     // Event listener for the search input
     searchInput.addEventListener('input', () => {
       const searchTerm = searchInput.value.toLowerCase();
-      Favorit.filteredRecipes = recipes.filter((recipe) =>
-        recipe.title.toLowerCase().includes(searchTerm),
-      );
+      Favorit.filteredRecipes = recipes.filter((recipe) => recipe.title
+      .toLowerCase().includes(searchTerm));
       renderRecipes(1, Favorit.filteredRecipes);
       renderPagination(1, Favorit.filteredRecipes.length, paginationContainer);
     });
@@ -68,8 +67,7 @@ function renderRecipes(page, recipes = [...Array(12)]) {
   recipesContainer.innerHTML = '';
 
   if (displayedRecipes.length === 0) {
-    recipesContainer.innerHTML =
-      '<p class="not-found">Maaf, resep tidak ditemukan.</p>';
+    recipesContainer.innerHTML = '<p class="not-found">Maaf, resep tidak ditemukan.</p>';
   } else {
     displayedRecipes.forEach((recipe) => {
       recipesContainer.innerHTML += createNewRecipesItemTemplate(
@@ -102,7 +100,7 @@ function renderPagination(currentPage, totalItems, container) {
     });
     paginationContainer.appendChild(prevButton);
 
-    for (let i = 1; i <= totalPages; i++) {
+    for (let i = 1; i <= totalPages; i += 1) {
       const button = document.createElement('button');
       button.innerText = i;
       button.addEventListener('click', () => {

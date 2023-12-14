@@ -34,8 +34,7 @@ const DrawerInitiator = {
       const linkPath = link.getAttribute('href');
 
       // Check if it's the home link ("/", "#", or "")
-      const isHomeLink =
-        linkPath === '#' || linkPath === '/' || linkPath === '';
+      const isHomeLink = linkPath === '#' || linkPath === '/' || linkPath === '';
 
       // Check if the link is the home link and currentPath is empty
       if (isHomeLink && (!currentPath || currentPath === '/')) {
