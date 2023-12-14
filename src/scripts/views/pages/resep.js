@@ -53,6 +53,24 @@ const Resep = {
 
     const inputElement = document.getElementById('s');
 
+    let timeoutId;
+
+    inputElement.addEventListener('input', (event) => {
+      // Hapus timeout sebelumnya (jika ada)
+      clearTimeout(timeoutId);
+
+      // Tentukan waktu penundaan (misalnya 500ms)
+      const delay = 500;
+
+      // Atur timeout baru
+      timeoutId = setTimeout(() => {
+        const newSearchValue = event.target.value;
+        this.manipulateURL(parsedUrl, { s: newSearchValue });
+        this.handleFilterChange();
+        this.setupFilterDropdown(categories);
+      }, delay);
+    });
+
     inputElement.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
         event.preventDefault(); // Cegah perilaku pengiriman formulir default
