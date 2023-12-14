@@ -7,6 +7,7 @@ const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { default: ImageminWebpackPlugin } = require('imagemin-webpack-plugin');
 
+
 module.exports = {
   entry: {
     app: path.resolve(__dirname, 'src/scripts/index.js'),
