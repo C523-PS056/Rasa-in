@@ -6,7 +6,7 @@
   "scripts": {
     "start-dev": "webpack serve --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
-    "serve": "http-server dist"
+    "serve": "http-server dist --port 9000"
   },
   "author": "",
   "license": "ISC",
@@ -23,17 +23,25 @@
     "eslint-plugin-import": "^2.27.5",
     "html-webpack-plugin": "^5.5.1",
     "http-server": "^14.1.1",
+    "imagemin-webpack-plugin": "^2.4.2",
     "mini-css-extract-plugin": "^2.7.6",
     "style-loader": "^3.3.3",
     "webpack": "^5.83.1",
+    "webpack-bundle-analyzer": "^4.10.1",
     "webpack-cli": "^5.1.1",
     "webpack-dev-server": "^4.15.0",
-    "webpack-merge": "^5.9.0"
+    "webpack-merge": "^5.9.0",
+    "workbox-webpack-plugin": "^7.0.0"
   },
   "dependencies": {
     "@splidejs/splide": "^4.1.4",
     "boxicons": "^2.1.4",
     "idb": "^7.1.1",
-    "regenerator-runtime": "^0.13.11"
+    "lazysizes": "^5.3.2",
+    "regenerator-runtime": "^0.13.11",
+    "workbox-precaching": "^6.5.3",
+    "workbox-routing": "^7.0.0",
+    "workbox-strategies": "^7.0.0",
+    "workbox-window": "^7.0.0"
   }
 }

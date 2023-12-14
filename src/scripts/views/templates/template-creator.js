@@ -13,9 +13,9 @@ const createCategoryRecipesItemTemplate = (category, isLoading = false) => {
   return `
     <a id="${category.key}" class="category__item" href="#/resep?category=${category.key}">
       <div class="category__item-image">
-        <img src="${category.img}" alt="${category.category}">
+        <img src="${category.img}" alt="kategori ${category.category}">
       </div>
-      <h4 class="category__item-title">${category.category}</h4>
+      <h3 class="category__item-title">${category.category}</h3>
     </a>
   `;
 };
@@ -45,7 +45,9 @@ const createNewRecipesItemTemplate = (recipes, isLoading = false) => {
       recipes.key ? `#/detail/${recipes.key}` : `#/detail/${recipes.id}`
     }">
       <div class="new-recipes__item-image">
-        <img src="${recipes.thumb}" alt="${recipes.title}">
+        <img src="${recipes.thumb}" alt="${
+    recipes.title
+  }">
       </div>
       <div class="new-recipes__item-text">
         <h4>${recipes.title}</h4>
@@ -194,7 +196,7 @@ const recipeDetailTemplate = (recipe, isLoading = false) => {
         }
         ${
           recipe.calories
-            ? `<div class="recipes-info__item"><i class='bx bx-cookie'></i><p>${recipes.calories}</p></div>`
+            ? `<div class="recipes-info__item"><i class='bx bx-cookie'></i><p>${recipe.calories}</p></div>`
             : ''
         }
       </div>

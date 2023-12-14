@@ -50,9 +50,8 @@ const Artikel = {
     // Event listener for the search input
     searchInput.addEventListener('input', () => {
       const searchTerm = searchInput.value.toLowerCase();
-      Artikel.filteredArticles = articles.filter((article) =>
-        article.title.toLowerCase().includes(searchTerm),
-      );
+      Artikel.filteredArticles = articles.filter((article) => article.title.toLowerCase()
+      .includes(searchTerm));
       renderArticles(1, Artikel.filteredArticles);
       renderPagination(1, Artikel.filteredArticles.length, paginationContainer);
     });
@@ -73,8 +72,7 @@ function renderArticles(page, articles = [...Array(12)]) {
   articlesContainer.innerHTML = '';
 
   if (displayedArticles.length === 0) {
-    articlesContainer.innerHTML =
-      '<p class="not-found">Maaf, artikel tidak ditemukan.</p>';
+    articlesContainer.innerHTML = '<p class="not-found">Maaf, artikel tidak ditemukan.</p>';
   } else {
     displayedArticles.forEach((article) => {
       // Use the skeleton template if article data is not available
@@ -111,7 +109,7 @@ function renderPagination(currentPage, totalItems, container) {
     paginationContainer.appendChild(prevButton);
 
     // Page buttons
-    for (let i = 1; i <= totalPages; i++) {
+    for (let i = 1; i <= totalPages; i += 1) {
       const button = document.createElement('button');
       button.innerText = i;
       button.addEventListener('click', () => {

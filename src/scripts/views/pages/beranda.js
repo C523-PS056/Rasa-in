@@ -1,4 +1,4 @@
-import Splide, { SLIDE } from '@splidejs/splide';
+import Splide from '@splidejs/splide';
 import DataSource from '../../data/data-source';
 import {
   createNewRecipesItemTemplate,
@@ -78,11 +78,11 @@ const Beranda = {
 </div>
 <div class="about-us-galery">
   <div class="about-us-galery__item"><h2>Rasa-IN</h2> </div>
-  <div class="about-us-galery__item"><img src="./images/about-us/cakra.jpg" alt=""></div>
-  <div class="about-us-galery__item"><img src="./images/about-us/ganteng.jpg" alt=""></div>
+  <div class="about-us-galery__item"><img class="lazyload" data-src="./images/about-us/cakra.jpg" alt="cakra"></div>
+  <div class="about-us-galery__item"><img class="lazyload" data-src="./images/about-us/ganteng.jpg" alt="rangga"></div>
   <div class="about-us-galery__item"><p>Rasa Indonesia Nusantara</p></div>
-  <div class="about-us-galery__item"><img src="./images/about-us/ari.jpg" alt=""></div>
-  <div class="about-us-galery__item"><img src="./images/about-us/tri.jpg" alt=""></div>
+  <div class="about-us-galery__item"><img class="lazyload" data-src="./images/about-us/ari.jpg" alt="ari"></div>
+  <div class="about-us-galery__item"><img class="lazyload" data-src="./images/about-us/tri.jpg" alt="tri"></div>
 </div>
 </section>      
       `;
@@ -127,8 +127,7 @@ const Beranda = {
     loadMoreButton.addEventListener('click', () => {
       categoryContainer.innerHTML = '';
       categories.forEach((category) => {
-        categoryContainer.innerHTML +=
-          createCategoryRecipesItemTemplate(category);
+        categoryContainer.innerHTML += createCategoryRecipesItemTemplate(category);
       });
 
       loadMoreButton.style.display = 'none';

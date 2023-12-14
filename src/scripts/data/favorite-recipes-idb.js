@@ -22,7 +22,7 @@ const FavoriteRecipeIdb = {
     return (await dbPromise).getAll(OBJECT_STORE_NAME);
   },
   async putRecipe(recipe) {
-    if (!recipe.hasOwnProperty('id')) {
+    if (!Object.prototype.hasOwnProperty.call(recipe, 'id')) {
       return;
     }
     return (await dbPromise).put(OBJECT_STORE_NAME, recipe);

@@ -27,15 +27,15 @@ const UrlParser = {
       resource: urlsSplits[1] || null,
       id: urlsSplits[2] || null,
       verb: urlsSplits[3] || null,
-      queryParams: queryParams,
+      queryParams,
     };
   },
 
   _urlCombiner(splitedUrl) {
     return (
-      (splitedUrl.resource ? `/${splitedUrl.resource}` : '/') +
-      (splitedUrl.id ? `/:id` : '') +
-      (splitedUrl.verb ? `/${splitedUrl.verb}` : '')
+      (splitedUrl.resource ? `/${splitedUrl.resource}` : '/')
+      + (splitedUrl.id ? '/:id' : '')
+      + (splitedUrl.verb ? `/${splitedUrl.verb}` : '')
     );
   },
 };

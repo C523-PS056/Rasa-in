@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import 'regenerator-runtime';
 import 'boxicons/css/boxicons.min.css';
 import '../styles/style.css';
@@ -5,6 +6,9 @@ import '../styles/responsive.css';
 import '@splidejs/splide/css';
 import App from './views/app';
 import scrollToTop from './utils/scroll-to-top';
+import swRegister from './utils/sw-register';
+import 'lazysizes';
+import 'lazysizes/plugins/parent-fit/ls.parent-fit';
 
 const app = new App({
   button: document.querySelector('#hamburgerButton'),
@@ -17,16 +21,10 @@ window.addEventListener('hashchange', () => {
   scrollToTop();
 });
 
-window.addEventListener('load', async () => {
-  app.renderPage();
-  scrollToTop();
-});
-
 const favicon = document.querySelector('link[rel="icon"]');
 
 if (
-  window.matchMedia &&
-  window.matchMedia('(prefers-color-scheme: dark)').matches
+  window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
 ) {
   favicon.href = './favicon-dark.png';
 } else {
@@ -49,3 +47,9 @@ function scrollHide() {
   }
   lastScrollTop = st <= 0 ? 0 : st;
 }
+
+window.addEventListener('load', async () => {
+  app.renderPage();
+  scrollToTop();
+  swRegister();
+});

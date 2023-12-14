@@ -25,7 +25,6 @@ p {
 
 body {
   background-color: #ededed;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -205,6 +204,7 @@ button {
 /* Main content */
 
 main {
+  min-height: 100vh;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -349,7 +349,7 @@ section {
       rgba(37, 37, 37, 0.69) 50.1%,
       rgba(30, 30, 30, 0.18) 100%
     ),
-    url(../public/images/heros/hero-image-small.jpg);
+    url(../public/images/heros/hero-image.jpg);
   background-size: cover;
   padding: 4rem 1.5rem 6rem 1.5rem;
 }
