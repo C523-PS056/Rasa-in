@@ -498,4 +498,7 @@
   .search-container{
     width: auto;
   }
+  .category__item-title{
+    font-size: .75rem;
+  }
 }

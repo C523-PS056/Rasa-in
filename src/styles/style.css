@@ -460,12 +460,12 @@ p {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  justify-content: center;
+  justify-content: start;
 
 }
 
 .category__item {
-  flex-basis: calc(33.3333% - 1rem);
+  flex-basis: calc((100% / 3) - 0.6666666666666667rem);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
