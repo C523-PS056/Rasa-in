@@ -108,6 +108,7 @@
 
   /* category */
   .category-container {
+    display: grid;
     margin: 1.5rem 0;
     grid-template-columns: repeat(4, 1fr);
     gap: 1.25rem;
@@ -490,5 +491,11 @@
   .article-detail-image:nth-child(1),
   .article-detail-image:nth-child(3) {
     height: 27.5rem;
+  }
+}
+
+@media screen and (max-width: 340px) {
+  .search-container{
+    width: auto;
   }
 }

@@ -457,13 +457,15 @@ p {
 }
 .category-container {
   margin: 1.25rem 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
+
 }
 
 .category__item {
+  flex-basis: calc(33.3333% - 1rem);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
