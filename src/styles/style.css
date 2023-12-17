@@ -987,6 +987,7 @@ footer {
 .article-detail-image:nth-child(2) {
   position: relative;
   height: 100%;
+  width: 100%;
   left: 50%;
   transform: translatex(-50%);
   z-index: 2;
@@ -995,6 +996,10 @@ footer {
 .article-detail-image:nth-child(1),
 .article-detail-image:nth-child(3) {
   display: none;
+}
+
+.article-detail-content h2 {
+  font-size: 1.125rem;
 }
 
 .article-detail-content p {
@@ -1009,7 +1014,7 @@ footer {
 
 .article-detail-content li {
   list-style-position: inside;
-  font-weight: 600;
+  line-height: 150%;
   margin-top: 0.5rem;
 }
 /* end article detail */
