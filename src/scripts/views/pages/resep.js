@@ -56,13 +56,8 @@ const Resep = {
     let timeoutId;
 
     inputElement.addEventListener('input', (event) => {
-      // Hapus timeout sebelumnya (jika ada)
       clearTimeout(timeoutId);
-
-      // Tentukan waktu penundaan (misalnya 500ms)
       const delay = 500;
-
-      // Atur timeout baru
       timeoutId = setTimeout(() => {
         const newSearchValue = event.target.value;
         this.manipulateURL(parsedUrl, { s: newSearchValue });
@@ -73,7 +68,7 @@ const Resep = {
 
     inputElement.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
-        event.preventDefault(); // Cegah perilaku pengiriman formulir default
+        event.preventDefault();
         const newSearchValue = inputElement.value;
         this.manipulateURL(parsedUrl, { s: newSearchValue });
         this.handleFilterChange();
@@ -180,7 +175,7 @@ const Resep = {
     });
 
     // Tambahkan listener untuk perubahan filter
-    dropdown.addEventListener('change', () => {
+    dropdown.onchange = () => {
       const cleanParam = window.location.href.replace(/&?s=[^&]+/, '');
       window.history.replaceState({}, document.title, cleanParam);
 
@@ -199,7 +194,7 @@ const Resep = {
 
       // Render resep berdasarkan kategori terpilih
       this.handleFilterChange();
-    });
+    };
   },
 
   renderPagination() {
@@ -259,6 +254,7 @@ const Resep = {
 
   // Metode untuk menangani perubahan filter kategori
   async handleFilterChange() {
+    console.log('filter change');
     const currentURL = window.location.href;
     const parsedUrl = UrlParser.parseActiveUrlWithoutCombiner();
     const urlParams = new URLSearchParams(parsedUrl.queryParams);
