@@ -156,7 +156,7 @@ function checkFileSize(input) {
   if (input.files.length > 0) {
     const fileSize = input.files[0].size;
     if (fileSize > maxFileSizeInBytes) {
-      errorMessageContainer.textContent = '* File terlalu besar. Maksimum 1 MB.';
+      errorMessageContainer.textContent = '* File terlalu besar. Maksimum 2 MB.';
       input.value = ''; // Mengosongkan input file
     } else {
       errorMessageContainer.textContent = ''; // Menghapus pesan kesalahan jika ukuran file sesuai
