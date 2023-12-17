@@ -204,7 +204,7 @@ const Beranda = {
     });
     const splide = new Splide('.splide', {
       breakpoints: {
-        1024: {
+        1023: {
           perPage: 2,
           gap: '.7rem',
         },
